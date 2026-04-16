@@ -86,22 +86,22 @@ export default grammar({
 
     binary_expression: $ => {
       const table = [
-        { operator: '+', precedence: PREC.ADDITIVE },
-        { operator: '-', precedence: PREC.ADDITIVE },
-        { operator: '*', precedence: PREC.MULTIPLICATIVE },
-        { operator: '/', precedence: PREC.MULTIPLICATIVE },
-        { operator: '^', precedence: PREC.EXPONENTIATION },
-        { operator: caseInsensitiveAlias('or'), precedence: PREC.OR },
-        { operator: caseInsensitiveAlias('and'), precedence: PREC.AND },
-        { operator: '=', precedence: PREC.EQUALITY },
-        { operator: '<>', precedence: PREC.EQUALITY },
-        { operator: '>', precedence: PREC.RELATIONAL },
-        { operator: '<', precedence: PREC.RELATIONAL },
-        { operator: '>=', precedence: PREC.RELATIONAL },
-        { operator: '<=', precedence: PREC.RELATIONAL },
+        {operator: '+', precedence: PREC.ADDITIVE},
+        {operator: '-', precedence: PREC.ADDITIVE},
+        {operator: '*', precedence: PREC.MULTIPLICATIVE},
+        {operator: '/', precedence: PREC.MULTIPLICATIVE},
+        {operator: '^', precedence: PREC.EXPONENTIATION},
+        {operator: caseInsensitiveAlias('or'), precedence: PREC.OR},
+        {operator: caseInsensitiveAlias('and'), precedence: PREC.AND},
+        {operator: '=', precedence: PREC.EQUALITY},
+        {operator: '<>', precedence: PREC.EQUALITY},
+        {operator: '>', precedence: PREC.RELATIONAL},
+        {operator: '<', precedence: PREC.RELATIONAL},
+        {operator: '>=', precedence: PREC.RELATIONAL},
+        {operator: '<=', precedence: PREC.RELATIONAL},
       ];
 
-      return choice(...table.map(({ operator, precedence }) => {
+      return choice(...table.map(({operator, precedence}) => {
         return prec.left(precedence, seq(
           alias($.expression, $.left_expression),
           alias(operator, $.operator),
