@@ -7,6 +7,16 @@
 /// <reference types="tree-sitter-cli/dsl" />
 // @ts-check
 
+const PREC = {
+  OR: 1,
+  AND: 2,
+  EQUALITY: 3,
+  RELATIONAL: 4,
+  ADDITIVE: 5,
+  MULTIPLICATIVE: 6,
+  EXPONENTIATION: 7,
+};
+
 export default grammar({
   name: 'datawindow_expression',
 
@@ -20,7 +30,85 @@ export default grammar({
 
 
   rules: {
-    source_file: $ => 'hello',
+    source_file: $ => $.expression,
+
+    expression: $ => choice(
+      alias($.identifier, $.column),
+      $._literal,
+      $.method_invocation,
+      $.field_access,
+      $.binary_expression,
+      $.parenthesized_expression,
+    ),
+
+    method_invocation: $ => seq(
+      optional(
+        seq(
+          alias(
+            choice(
+              $.method_invocation,
+              $.field_access,
+              $.identifier,
+            ),
+            $.object),
+          '.',
+        ),
+      ),
+      alias($.identifier, $.method),
+      $.open_parenthesis,
+      optional($.parameter_list),
+      $.close_parenthesis,
+    ),
+
+    field_access: $ => seq(
+      alias(
+        choice(
+          $.method_invocation,
+          $.field_access,
+          $.identifier,
+        ),
+        $.object,
+      ),
+      '.',
+      alias($.identifier, $.field),
+    ),
+
+    parameter_list: $ => commaSep1(choice(
+      $.expression
+    )),
+
+    parenthesized_expression: $ => seq(
+      $.open_parenthesis,
+      $.expression,
+      $.close_parenthesis,
+    ),
+
+    binary_expression: $ => {
+      const table = [
+        { operator: '+', precedence: PREC.ADDITIVE },
+        { operator: '-', precedence: PREC.ADDITIVE },
+        { operator: '*', precedence: PREC.MULTIPLICATIVE },
+        { operator: '/', precedence: PREC.MULTIPLICATIVE },
+        { operator: '^', precedence: PREC.EXPONENTIATION },
+        { operator: caseInsensitiveAlias('or'), precedence: PREC.OR },
+        { operator: caseInsensitiveAlias('and'), precedence: PREC.AND },
+        { operator: '=', precedence: PREC.EQUALITY },
+        { operator: '<>', precedence: PREC.EQUALITY },
+        { operator: '>', precedence: PREC.RELATIONAL },
+        { operator: '<', precedence: PREC.RELATIONAL },
+        { operator: '>=', precedence: PREC.RELATIONAL },
+        { operator: '<=', precedence: PREC.RELATIONAL },
+      ];
+
+      return choice(...table.map(({ operator, precedence }) => {
+        return prec.left(precedence, seq(
+          alias($.expression, $.left_expression),
+          alias(operator, $.operator),
+          alias($.expression, $.right_expression),
+        ));
+      }));
+    },
+
 
     identifier: _ => /[a-zA-Z_][a-zA-Z0-9\-_$#%]*/,
 
