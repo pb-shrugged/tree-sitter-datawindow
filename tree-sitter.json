@@ -3,10 +3,10 @@
   "grammars": [
     {
       "name": "datawindow_syntax",
-      "path": "grammars/datawindow_syntax",
       "camelcase": "DatawindowSyntax",
       "title": "Datawindow",
       "scope": "source.datawindow",
+      "path": "grammars/datawindow_syntax",
       "file-types": [
         "srd"
       ],
@@ -15,10 +15,11 @@
     },
     {
       "name": "datawindow_expression",
-      "path": "grammars/datawindow_expression",
       "camelcase": "DatawindowExpression",
       "title": "DatawindowExpression",
       "scope": "source.datawindow_expression",
+      "path": "grammars/datawindow_expression",
+      "file-types": null,
       "injection-regex": "^datawindowexpression$",
       "class-name": "TreeSitterDatawindowExpression"
     }
