@@ -42,10 +42,10 @@ function loadMetadata(name, path) {
   return lang;
 }
 
-export const datawindow = loadMetadata("datawindow", "grammars/datawindow_syntax");
+export const datawindow_syntax = loadMetadata("datawindow_syntax", "grammars/datawindow_syntax");
 export const datawindow_expression = loadMetadata("datawindow_expression", "grammars/datawindow_expression");
 
 export default {
-  datawindow,
+  datawindow_syntax,
   datawindow_expression
 };

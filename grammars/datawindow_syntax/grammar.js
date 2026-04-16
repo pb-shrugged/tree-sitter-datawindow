@@ -8,7 +8,7 @@
 // @ts-check
 
 export default grammar({
-  name: 'datawindow',
+  name: 'datawindow_syntax',
 
   word: $ => $.identifier,
 

@@ -2,16 +2,16 @@
   "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
   "grammars": [
     {
-      "name": "datawindow",
+      "name": "datawindow_syntax",
       "path": "grammars/datawindow_syntax",
-      "camelcase": "Datawindow",
+      "camelcase": "DatawindowSyntax",
       "title": "Datawindow",
       "scope": "source.datawindow",
       "file-types": [
         "srd"
       ],
       "injection-regex": "^datawindow$",
-      "class-name": "TreeSitterDatawindow"
+      "class-name": "TreeSitterDatawindowSyntax"
     },
     {
       "name": "datawindow_expression",

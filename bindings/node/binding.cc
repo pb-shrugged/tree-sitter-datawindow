@@ -2,7 +2,7 @@
 
 typedef struct TSLanguage TSLanguage;
 
-extern "C" TSLanguage *tree_sitter_datawindow();
+extern "C" TSLanguage *tree_sitter_datawindow_syntax();
 extern "C" TSLanguage *tree_sitter_datawindow_expression();
 
 // "tree-sitter", "language" hashed with BLAKE2
@@ -11,9 +11,9 @@ const napi_type_tag LANGUAGE_TYPE_TAG = {
 };
 
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
-    auto datawindow = Napi::External<TSLanguage>::New(env, tree_sitter_datawindow());
-    datawindow.TypeTag(&LANGUAGE_TYPE_TAG);
-    exports["datawindow"] = datawindow;
+    auto datawindow_syntax = Napi::External<TSLanguage>::New(env, tree_sitter_datawindow_syntax());
+    datawindow_syntax.TypeTag(&LANGUAGE_TYPE_TAG);
+    exports["datawindow_syntax"] = datawindow_syntax;
 
     auto datawindow_expression = Napi::External<TSLanguage>::New(env, tree_sitter_datawindow_expression());
     datawindow_expression.TypeTag(&LANGUAGE_TYPE_TAG);
