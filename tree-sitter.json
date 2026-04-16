@@ -1,0 +1,42 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "datawindow",
+      "camelcase": "Datawindow",
+      "title": "Datawindow",
+      "scope": "source.datawindow",
+      "file-types": [
+        "srd"
+      ],
+      "injection-regex": "^datawindow$",
+      "class-name": "TreeSitterDatawindow"
+    }
+  ],
+  "metadata": {
+    "version": "0.0.1",
+    "license": "MIT",
+    "description": "Datawindow syntax grammar for Tree-sitter",
+    "authors": [
+      {
+        "name": "Jose Cagnini",
+        "email": "jose.cagnini@proton.me",
+        "url": ""
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/pb-shrugged/tree-sitter-datawindow",
+      "funding": ""
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": false,
+    "java": false,
+    "node": true,
+    "python": false,
+    "rust": false,
+    "swift": false,
+    "zig": false
+  }
+}
