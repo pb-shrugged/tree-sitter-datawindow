@@ -55,6 +55,7 @@
   },
   "scripts": {
     "install": "node-gyp-build",
-    "test": "node --test bindings/node/*_test.js"
+    "test": "node --test bindings/node/*_test.js",
+    "lint": "npm run lint --prefix grammars/datawindow_expression && npm run lint --prefix grammars/datawindow_syntax"
   }
 }

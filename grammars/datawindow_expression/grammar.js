@@ -74,7 +74,7 @@ export default grammar({
     ),
 
     parameter_list: $ => commaSep1(choice(
-      $.expression
+      $.expression,
     )),
 
     parenthesized_expression: $ => seq(
@@ -85,22 +85,22 @@ export default grammar({
 
     binary_expression: $ => {
       const table = [
-        { operator: '+', precedence: PREC.ADDITIVE },
-        { operator: '-', precedence: PREC.ADDITIVE },
-        { operator: '*', precedence: PREC.MULTIPLICATIVE },
-        { operator: '/', precedence: PREC.MULTIPLICATIVE },
-        { operator: '^', precedence: PREC.EXPONENTIATION },
-        { operator: caseInsensitiveAlias('or'), precedence: PREC.OR },
-        { operator: caseInsensitiveAlias('and'), precedence: PREC.AND },
-        { operator: '=', precedence: PREC.EQUALITY },
-        { operator: '<>', precedence: PREC.EQUALITY },
-        { operator: '>', precedence: PREC.RELATIONAL },
-        { operator: '<', precedence: PREC.RELATIONAL },
-        { operator: '>=', precedence: PREC.RELATIONAL },
-        { operator: '<=', precedence: PREC.RELATIONAL },
+        {operator: '+', precedence: PREC.ADDITIVE},
+        {operator: '-', precedence: PREC.ADDITIVE},
+        {operator: '*', precedence: PREC.MULTIPLICATIVE},
+        {operator: '/', precedence: PREC.MULTIPLICATIVE},
+        {operator: '^', precedence: PREC.EXPONENTIATION},
+        {operator: caseInsensitiveAlias('or'), precedence: PREC.OR},
+        {operator: caseInsensitiveAlias('and'), precedence: PREC.AND},
+        {operator: '=', precedence: PREC.EQUALITY},
+        {operator: '<>', precedence: PREC.EQUALITY},
+        {operator: '>', precedence: PREC.RELATIONAL},
+        {operator: '<', precedence: PREC.RELATIONAL},
+        {operator: '>=', precedence: PREC.RELATIONAL},
+        {operator: '<=', precedence: PREC.RELATIONAL},
       ];
 
-      return choice(...table.map(({ operator, precedence }) => {
+      return choice(...table.map(({operator, precedence}) => {
         return prec.left(precedence, seq(
           alias($.expression, $.left_expression),
           alias(operator, $.operator),
@@ -126,6 +126,7 @@ export default grammar({
     decimal_literal: _ => /\d*\.\d+/,
     real_literal: _ => /(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)[Ee][+-]?[0-9]+/,
     date_literal: _ => /(?:\d{4}-\d{2}-\d{2})/,
+    // @ts-ignore
     time_literal: $ => /(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\.[0-9]{1,6})?/,
 
 
@@ -134,6 +135,7 @@ export default grammar({
       seq($.single_quote, alias(repeat(token.immediate(prec(1, choice(/[^'\\]/, /\\./, /~'/)))), $.string_content), $.single_quote),
     ),
 
+    // @ts-ignore
     boolean_literal: $ => choice(
       caseInsensitiveAlias('true'),
       caseInsensitiveAlias('false'),
@@ -174,17 +176,6 @@ function caseInsensitiveRegExp(word) {
  */
 function caseInsensitiveAlias(word) {
   return alias(caseInsensitiveRegExp(word), word);
-}
-
-/**
- * Creates a rule to optionally match one or more of the rules separated by a comma
- *
- * @param {Rule} rule
- *
- * @returns {ChoiceRule}
- */
-function commaSep(rule) {
-  return optional(commaSep1(rule));
 }
 
 /**
