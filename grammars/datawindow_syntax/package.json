@@ -1,4 +1,5 @@
 {
+    "type": "module",
     "private": true,
     "scripts": {
         "ts:start": "npm run ts:generate && npm run ts:run",
