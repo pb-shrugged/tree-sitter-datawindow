@@ -1,0 +1,30 @@
+===
+If function expression
+:language(datawindow_expression)
+===
+
+If(  flageditar = 'T' , 0 , 1 )
+
+---
+
+(source_file
+  (expression
+    (method_invocation
+      (method)
+      (open_parenthesis)
+      (parameter_list
+        (expression
+          (binary_expression
+            (left_expression
+              (column))
+            (operator)
+            (right_expression
+              (string_literal
+                (single_quote)
+                (string_content)
+                (single_quote)))))
+        (expression
+          (integer_literal))
+        (expression
+          (integer_literal)))
+      (close_parenthesis))))

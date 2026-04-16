@@ -1,5 +1,6 @@
 ===
 Release statement
+:language(datawindow_syntax)
 ===
 release 22;
 ---
@@ -11,6 +12,7 @@ release 22;
 
 ===
 Datawindow definition method
+:language(datawindow_syntax)
 ===
 
 xsltgen()
@@ -381,6 +383,7 @@ datawindow(units=0 timer_interval=0 color=1073741824 brushmode=0 transparency=0 
 
 ===
 Table definition method
+:language(datawindow_syntax)
 ===
 
 table(column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=for_codigo dbname="tb_fornecedor.for_codigo" )
