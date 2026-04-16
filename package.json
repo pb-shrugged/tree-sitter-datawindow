@@ -1,5 +1,5 @@
 {
-  "name": "tree-sitter-datawindow",
+  "name": "@pb-shrugged/tree-sitter-datawindow",
   "version": "0.0.1",
   "description": "Datawindow syntax grammar for Tree-sitter",
   "type": "module",
