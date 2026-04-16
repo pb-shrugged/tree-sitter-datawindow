@@ -24,10 +24,10 @@ export default grammar({
       $.datawindow_file,
     ),
 
-    datawindow_file: $ => seq(
+    datawindow_file: $ => repeat1(choice(
       $.release_statement,
-      repeat1($.datawindow_statement),
-    ),
+      $.datawindow_statement,
+    )),
 
     release_statement: $ => seq(
       caseInsensitiveAlias('release'),
@@ -36,7 +36,7 @@ export default grammar({
     ),
 
     datawindow_statement: $ => choice(
-      $.datawindow_method_invocation,
+      alias($.datawindow_method_invocation, $.datawindow_definition_method),
     ),
 
     datawindow_method_invocation: $ => seq(

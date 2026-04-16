@@ -25,20 +25,20 @@
       ]
     },
     "datawindow_file": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "release_statement"
-        },
-        {
-          "type": "REPEAT1",
-          "content": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "release_statement"
+          },
+          {
             "type": "SYMBOL",
             "name": "datawindow_statement"
           }
-        }
-      ]
+        ]
+      }
     },
     "release_statement": {
       "type": "SEQ",
@@ -80,8 +80,13 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "datawindow_method_invocation"
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "datawindow_method_invocation"
+          },
+          "named": true,
+          "value": "datawindow_definition_method"
         }
       ]
     },

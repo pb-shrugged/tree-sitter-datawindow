@@ -5,6 +5,37 @@
     "fields": {}
   },
   {
+    "type": "datawindow_definition_method",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "close_parenthesis",
+          "named": true
+        },
+        {
+          "type": "datawindow_property_list",
+          "named": true
+        },
+        {
+          "type": "method",
+          "named": true
+        },
+        {
+          "type": "object",
+          "named": true
+        },
+        {
+          "type": "open_parenthesis",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "datawindow_file",
     "named": true,
     "fields": {},
@@ -69,37 +100,6 @@
         },
         {
           "type": "value",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "datawindow_method_invocation",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "close_parenthesis",
-          "named": true
-        },
-        {
-          "type": "datawindow_property_list",
-          "named": true
-        },
-        {
-          "type": "method",
-          "named": true
-        },
-        {
-          "type": "object",
-          "named": true
-        },
-        {
-          "type": "open_parenthesis",
           "named": true
         }
       ]
@@ -192,7 +192,7 @@
       "required": true,
       "types": [
         {
-          "type": "datawindow_method_invocation",
+          "type": "datawindow_definition_method",
           "named": true
         }
       ]
