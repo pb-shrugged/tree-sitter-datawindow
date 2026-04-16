@@ -19,29 +19,22 @@ include(GNUInstallDirs)
 
 find_program(TREE_SITTER_CLI tree-sitter DOC "Tree-sitter CLI")
 
-add_custom_command(OUTPUT "${CMAKE_CURRENT_SOURCE_DIR}/src/grammar.json"
-                          "${CMAKE_CURRENT_SOURCE_DIR}/src/node-types.json"
-                   DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/grammar.js"
-                   COMMAND "${TREE_SITTER_CLI}" generate grammar.js --no-parser
-                   WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-                   COMMENT "Generating grammar.json")
+add_library(tree-sitter-datawindow
+            grammars/datawindow_syntax/src/parser.c
+            grammars/datawindow_expression/src/parser.c)
 
-add_custom_command(OUTPUT "${CMAKE_CURRENT_SOURCE_DIR}/src/parser.c"
-                   BYPRODUCTS "${CMAKE_CURRENT_SOURCE_DIR}/src/tree_sitter/parser.h"
-                              "${CMAKE_CURRENT_SOURCE_DIR}/src/tree_sitter/alloc.h"
-                              "${CMAKE_CURRENT_SOURCE_DIR}/src/tree_sitter/array.h"
-                   DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/grammar.json"
-                   COMMAND "${TREE_SITTER_CLI}" generate src/grammar.json
-                            --abi=${TREE_SITTER_ABI_VERSION}
-                   WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-                   COMMENT "Generating parser.c")
-
-add_library(tree-sitter-datawindow src/parser.c)
-if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/scanner.c)
-  target_sources(tree-sitter-datawindow PRIVATE src/scanner.c)
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/grammars/datawindow_syntax/src/scanner.c)
+  target_sources(tree-sitter-datawindow PRIVATE grammars/datawindow_syntax/src/scanner.c)
 endif()
+
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/grammars/datawindow_expression/src/scanner.c)
+  target_sources(tree-sitter-datawindow PRIVATE grammars/datawindow_expression/src/scanner.c)
+endif()
+
 target_include_directories(tree-sitter-datawindow
-                           PRIVATE src
+                           PRIVATE 
+                           grammars/datawindow_syntax/src
+                           grammars/datawindow_expression/src
                            INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/bindings/c>
                                      $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 

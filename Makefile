@@ -3,7 +3,8 @@ HOMEPAGE_URL := https://github.com/pb-shrugged/tree-sitter-datawindow
 VERSION := 0.0.3
 
 # repository
-SRC_DIR := src
+SRC_DIR_SYNTAX := grammars/datawindow_syntax/src
+SRC_DIR_EXPRESSION := grammars/datawindow_expression/src
 
 TS ?= tree-sitter
 
@@ -16,16 +17,19 @@ BINDIR ?= $(PREFIX)/bin
 PCLIBDIR ?= $(LIBDIR)/pkgconfig
 
 # source/object files
-PARSER := $(SRC_DIR)/parser.c
-EXTRAS := $(filter-out $(PARSER),$(wildcard $(SRC_DIR)/*.c))
-OBJS := $(patsubst %.c,%.o,$(PARSER) $(EXTRAS))
+PARSER_SYNTAX := $(SRC_DIR_SYNTAX)/parser.c
+PARSER_EXPRESSION := $(SRC_DIR_EXPRESSION)/parser.c
+SCANNER_SYNTAX := $(wildcard $(SRC_DIR_SYNTAX)/scanner.c)
+SCANNER_EXPRESSION := $(wildcard $(SRC_DIR_EXPRESSION)/scanner.c)
+
+OBJS := $(PARSER_SYNTAX:.c=.o) $(PARSER_EXPRESSION:.c=.o) $(SCANNER_SYNTAX:.c=.o) $(SCANNER_EXPRESSION:.c=.o)
 
 # flags
 ARFLAGS ?= rcs
-override CFLAGS += -I$(SRC_DIR) -std=c11 -fPIC
+override CFLAGS += -I$(SRC_DIR_SYNTAX) -I$(SRC_DIR_EXPRESSION) -std=c11 -fPIC
 
-# ABI versioning
-SONAME_MAJOR = $(shell sed -n 's/\#define LANGUAGE_VERSION //p' $(PARSER))
+# ABI versioning (using syntax version as primary)
+SONAME_MAJOR = $(shell sed -n 's/\#define LANGUAGE_VERSION //p' $(PARSER_SYNTAX))
 SONAME_MINOR = $(word 1,$(subst ., ,$(VERSION)))
 
 # OS-specific bits
@@ -72,11 +76,11 @@ $(LANGUAGE_NAME).pc: bindings/c/$(LANGUAGE_NAME).pc.in
 		-e 's|@PROJECT_HOMEPAGE_URL@|$(HOMEPAGE_URL)|' \
 		-e 's|@CMAKE_INSTALL_PREFIX@|$(PREFIX)|' $< > $@
 
-$(SRC_DIR)/grammar.json: grammar.js
-	$(TS) generate --no-parser $^
+$(PARSER_SYNTAX): grammars/datawindow_syntax/grammar.js
+	cd grammars/datawindow_syntax && $(TS) generate
 
-$(PARSER): $(SRC_DIR)/grammar.json
-	$(TS) generate $^
+$(PARSER_EXPRESSION): grammars/datawindow_expression/grammar.js
+	cd grammars/datawindow_expression && $(TS) generate
 
 install: all
 	install -d '$(DESTDIR)$(DATADIR)'/tree-sitter/queries/datawindow '$(DESTDIR)$(INCLUDEDIR)'/tree_sitter '$(DESTDIR)$(PCLIBDIR)' '$(DESTDIR)$(LIBDIR)'
