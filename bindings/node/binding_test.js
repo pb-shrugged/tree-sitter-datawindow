@@ -4,8 +4,8 @@ import Parser from "tree-sitter";
 
 test("can load datawindow grammar", async () => {
   const parser = new Parser();
-  const { datawindow } = await import("./index.js");
-  assert.doesNotThrow(() => parser.setLanguage(datawindow));
+  const { datawindow_syntax } = await import("./index.js");
+  assert.doesNotThrow(() => parser.setLanguage(datawindow_syntax));
 });
 
 test("can load datawindow_expression grammar", async () => {

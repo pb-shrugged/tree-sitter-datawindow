@@ -5,19 +5,21 @@ on:
   push:
     branches: [ master ]
     paths:
-      - grammar.js
-      - src/**
-      - test/**
+      - tree-sitter.json
+      - package.json
+      - grammars/**
       - bindings/**
       - binding.gyp
+      - test/**
   pull_request:
     branches: [ master ]
     paths:
-      - grammar.js
-      - src/**
-      - test/**
+      - tree-sitter.json
+      - package.json
+      - grammars/**
       - bindings/**
       - binding.gyp
+      - test/**
 
 jobs:
   test:
