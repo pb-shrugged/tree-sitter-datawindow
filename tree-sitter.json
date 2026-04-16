@@ -3,6 +3,7 @@
   "grammars": [
     {
       "name": "datawindow",
+      "path": "grammars/datawindow_syntax",
       "camelcase": "Datawindow",
       "title": "Datawindow",
       "scope": "source.datawindow",
@@ -11,6 +12,15 @@
       ],
       "injection-regex": "^datawindow$",
       "class-name": "TreeSitterDatawindow"
+    },
+    {
+      "name": "datawindow_expression",
+      "path": "grammars/datawindow_expression",
+      "camelcase": "DatawindowExpression",
+      "title": "DatawindowExpression",
+      "scope": "source.datawindow_expression",
+      "injection-regex": "^datawindowexpression$",
+      "class-name": "TreeSitterDatawindowExpression"
     }
   ],
   "metadata": {
@@ -20,13 +30,11 @@
     "authors": [
       {
         "name": "Jose Cagnini",
-        "email": "jose.cagnini@proton.me",
-        "url": ""
+        "email": "jose.cagnini@proton.me"
       }
     ],
     "links": {
-      "repository": "https://github.com/pb-shrugged/tree-sitter-datawindow",
-      "funding": ""
+      "repository": "https://github.com/pb-shrugged/tree-sitter-datawindow"
     }
   },
   "bindings": {

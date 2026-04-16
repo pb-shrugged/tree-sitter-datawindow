@@ -1,0 +1,12 @@
+{
+    "private": true,
+    "scripts": {
+        "ts:start": "npm run ts:generate && npm run ts:run",
+        "ts:generate": "tree-sitter generate",
+        "ts:run": "tree-sitter build --wasm && tree-sitter playground -q",
+        "ts:test": "tree-sitter test",
+        "ts:parse:playground": "npm run ts:generate && tree-sitter parse ./examples/playground.srf",
+        "lint": "eslint grammar.js",
+        "lint:fix": "eslint grammar.js --fix"
+    }
+}
