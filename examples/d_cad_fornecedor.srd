@@ -1,0 +1,34 @@
+release 10.5;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=1 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no grid.lines=0 )
+header(height=80 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=92 color="536870912" )
+table(column=(type=decimal(0) update=yes updatewhereclause=yes key=yes name=for_codigo dbname="tb_fornecedor.for_codigo" )
+ column=(type=char(45) update=yes updatewhereclause=yes name=for_descricao dbname="tb_fornecedor.for_descricao" )
+ column=(type=char(1) updatewhereclause=yes name=flageditar dbname="flageditar" initial="F" )
+ retrieve="  SELECT dba.tb_fornecedor.for_codigo,   
+         dba.tb_fornecedor.for_descricao  ,
+	  cast('F' as char(1)) as flageditar
+    FROM dba.tb_fornecedor   
+ WHERE
+	(:RA_CODIGO = '' OR CAST(for_codigo AS VARCHAR(20)) LIKE   '%' || :RA_CODIGO  || '%'   ) AND
+	(:RA_DESCRICAO = '' OR LOWER(for_descricao) LIKE '%' ||  LOWER(:RA_DESCRICAO) || '%'  )
+	" update="dba.tb_fornecedor" updatewhere=1 updatekeyinplace=no arguments=(("RA_CODIGO", string),("RA_DESCRICAO", string)) )
+text(band=header alignment="2" text="Código" border="0" color="33554432" x="14" y="8" height="64" width="475" html.valueishtml="0"  name=for_codigo_t visible="1"  font.face="Tahoma" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Descrição" border="0" color="33554432" x="498" y="12" height="64" width="2249" html.valueishtml="0"  name=for_descricao_t visible="1"  font.face="Tahoma" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="2" tabsequence=32766 border="0~tIf(  flageditar = 'T' , 5 , 0 )" color="33554432" x="9" y="8" height="76" width="480" format="[general]" html.valueishtml="0" protect="0~t1"  name=for_codigo visible="1" editmask.mask="######" editmask.focusrectangle=no  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+button(band=detail text="" filename="imagens\excluir.jpg" enabled=yes action="0" border="0" color="33554432" x="2752" y="0" height="92" width="128" vtextalign="0" htextalign="0"  name=b_excluir visible="1"  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+button(band=detail text="..." enabled=yes action="0" border="0" color="33554432" x="2894" y="0" height="92" width="128" vtextalign="0" htextalign="0"  name=b_editar visible="1"  font.face="Tahoma" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+column(band=detail id=2 alignment="0" tabsequence=10 border="0~tIf(  flageditar = 'T' , 5 , 0 )" color="33554432" x="503" y="8" height="76" width="2245" format="[general]" html.valueishtml="0" protect="0~tIf(  flageditar = 'T' , 0 , 1 )"  name=for_descricao visible="1" edit.limit=45 edit.case=any edit.focusrectangle=no edit.autoselect=yes edit.autohscroll=yes  font.face="Tahoma" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 
