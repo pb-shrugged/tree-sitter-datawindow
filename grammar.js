@@ -26,7 +26,7 @@ export default grammar({
 
     datawindow_file: $ => seq(
       $.release_statement,
-      repeat1($.datawindow_statement)
+      repeat1($.datawindow_statement),
     ),
 
     release_statement: $ => seq(
@@ -45,9 +45,9 @@ export default grammar({
           choice(
             $.datawindow_method_invocation,
             $.datawindow_field_access,
-            $.identifier
+            $.identifier,
           ),
-          '.'
+          '.',
         ),
         $.object)),
       alias($.identifier, $.method),
@@ -61,9 +61,9 @@ export default grammar({
         choice(
           $.datawindow_method_invocation,
           $.datawindow_field_access,
-          $.identifier
+          $.identifier,
         ),
-        $.object
+        $.object,
       ),
       '.',
       alias($.identifier, $.field),
@@ -77,7 +77,7 @@ export default grammar({
           $.identifier,
           $.datawindow_field_access,
         ),
-        $.property
+        $.property,
       ),
       '=',
       choice(
