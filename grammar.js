@@ -18,6 +18,7 @@ export default grammar({
     $.block_comment,
   ],
 
+
   rules: {
     source_file: $ => seq(
       optional($.export_header),
